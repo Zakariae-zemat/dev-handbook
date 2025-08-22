@@ -299,9 +299,152 @@ git merge upstream/main
 git push origin main
 ```
 
-## Advanced Commands
+## .gitignore - Excluding Files
 
-### Stashing
+### What is .gitignore?
+The `.gitignore` file tells Git which files and directories to ignore and not track. This is essential for excluding:
+- Build artifacts and compiled files
+- Dependencies (node_modules, vendor folders)
+- Environment variables and secrets
+- IDE/editor specific files
+- Operating system files
+- Log files and temporary files
+
+### Creating and Using .gitignore
+```bash
+# Create .gitignore file in repository root
+touch .gitignore
+
+# Add .gitignore to repository
+git add .gitignore
+git commit -m "Add .gitignore file"
+```
+
+### Common .gitignore Patterns
+
+#### Basic Syntax
+```gitignore
+# Comments start with #
+
+# Ignore specific file
+config.env
+secrets.txt
+
+# Ignore all files with specific extension
+*.log
+*.tmp
+*.cache
+
+# Ignore entire directory
+node_modules/
+build/
+dist/
+
+# Ignore files in specific directory
+logs/*.log
+
+# Ignore all .txt files in any directory
+**/*.txt
+
+# Ignore files only in root directory
+/root-file.txt
+
+# Negate pattern (don't ignore)
+!important.log
+*.log
+!important.log  # This file will be tracked despite *.log rule
+```
+
+#### Common .gitignore Examples
+
+**Most Common Patterns (Universal)**
+```gitignore
+# Environment files
+.env
+.env.local
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+build/
+dist/
+target/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+```
+
+**Quick Language Examples**
+```gitignore
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# Node.js
+node_modules/
+npm-debug.log
+
+# Java
+*.class
+target/
+
+# C/C++
+*.o
+*.exe
+```
+
+**Pro Tip**: Use https://gitignore.io to generate .gitignore files for your specific tech stack!
+
+### Managing .gitignore
+
+#### Check if file is ignored
+```bash
+# Check if specific file is ignored
+git check-ignore filename.txt
+
+# Show which .gitignore rule is causing file to be ignored
+git check-ignore -v filename.txt
+
+# List all ignored files
+git status --ignored
+```
+
+#### Ignore already tracked files
+```bash
+# Remove file from tracking but keep local copy
+git rm --cached filename.txt
+
+# Remove entire directory from tracking
+git rm -r --cached directory-name/
+
+# After removing, add to .gitignore and commit
+echo "filename.txt" >> .gitignore
+git add .gitignore
+git commit -m "Stop tracking filename.txt"
+```
+
+#### Update .gitignore for already tracked files
+```bash
+# If you add a file to .gitignore that's already tracked:
+# 1. Add the pattern to .gitignore
+echo
 ```bash
 # Stash current changes
 git stash
